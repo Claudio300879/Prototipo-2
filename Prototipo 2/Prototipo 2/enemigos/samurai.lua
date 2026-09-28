@@ -1,28 +1,13 @@
 Samurai = Class{__includes = Enemigo}
 
-function Samurai:Actualizar(x,y,a,dt)
-    -- Persecución
-    local dist_x = math.abs(self.x - x)
-    local dist_y = math.abs(self.y - y)
+function Samurai:init(x, y, ancho, alto)
+    Enemigo.init(self, x, y, ancho or 70, alto or 60, 180)
+    self.vx = 60
+end
 
-    if dist_x > dist_y then
-        if dist_x > a then
-            if self.x < x then
-                self.x = self.x + (self.velocidad * dt)
-            elseif self.x > x then
-                self.x = self.x - (self.velocidad * dt)
-            end
-        end
-    else
-        if dist_y > a then
-            if self.y < y then
-                self.y = self.y + (self.velocidad * dt)
-            elseif self.y > y then
-                self.y = self.y - (self.velocidad * dt)
-            end
-        end
+function Samurai:update(dt)
+    self.x = self.x + self.vx * dt
+    if self.x <= 20 or self.x + self.ancho >= love.graphics.getWidth() - 20 then
+        self.vx = -self.vx
     end
-
-    self.hitbox_x = self.x - self.origen_x
-    self.hitbox_y = self.y - self.origen_y
 end

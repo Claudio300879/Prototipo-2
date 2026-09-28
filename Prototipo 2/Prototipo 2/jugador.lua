@@ -1,51 +1,48 @@
 Jugador = Class{}
--- =================== INICIALIZACION ===================
-function Jugador:init(x, y, v)
-    self.sprite = love.graphics.newImage("img/Ninja.png")
-    self.ancho = self.sprite:getWidth()
-    self.alto  = self.sprite:getHeight()
-    self.origen_x = self.ancho/2
-    self.origen_y = self.alto/2
+
+function Jugador:init(x, y)
     self.x = x
     self.y = y
-    self.hitbox_x =  self.x - self.origen_x
-    self.hitbox_y =  self.y - self.origen_y
-    self.velocidad = v
+    self.ancho = 28
+    self.alto = 24
+    self.velocidad = 200
+    self.fuerzaArrastre = 0
 end
--- =================== ACTUALIZAR ===================
-function Jugador:Actualizar(dt)
 
-    if love.keyboard.isDown("right") then
-        self.x = self.x + (self.velocidad * dt)
-    elseif love.keyboard.isDown("left") then
-        self.x = self.x - (self.velocidad * dt)
-    elseif love.keyboard.isDown("down") then
-        self.y = self.y + (self.velocidad * dt)
-    elseif love.keyboard.isDown("up") then
-        self.y = self.y - (self.velocidad * dt)
+function Jugador:update(dt)
+    if love.keyboard.isDown('left') or love.keyboard.isDown('a') then
+        self.x = self.x - self.velocidad * dt
+    end
+    if love.keyboard.isDown('right') or love.keyboard.isDown('d') then
+        self.x = self.x + self.velocidad * dt
+    end
+    if love.keyboard.isDown('up') or love.keyboard.isDown('w') then
+        self.y = self.y - self.velocidad * dt
+    end
+    if love.keyboard.isDown('down') or love.keyboard.isDown('s') then
+        self.y = self.y + self.velocidad * dt
     end
 
-    self.hitbox_x = self.x - self.origen_x
-    self.hitbox_y = self.y - self.origen_y
+    self.y = self.y + self.fuerzaArrastre * dt
+
+    self.x = math.max(0, math.min(love.graphics.getWidth() - self.ancho, self.x))
 end
--- =================== Colision ===================
-function Jugador:Colision(otro_hitbox_x,otro_hitbox_y, otro_ancho, otro_alto)
-   return  self.hitbox_x < otro_hitbox_x + otro_ancho and
-           otro_hitbox_x < self.hitbox_x + self.ancho and
-           self.hitbox_y < otro_hitbox_y + otro_alto and
-           otro_hitbox_y < self.hitbox_y + self.alto
+
+function Jugador:draw()
+    love.graphics.setColor(0.3, 0.3, 0.3)
+    love.graphics.ellipse('fill', self.x + 14, self.y + 14, 10, 8)
+    
+    love.graphics.setColor(0.8, 0.9, 1, 0.6)
+    love.graphics.ellipse('fill', self.x + 8, self.y + 6, 8, 4)
+    love.graphics.ellipse('fill', self.x + 20, self.y + 6, 8, 4)
+
+    love.graphics.setColor(0.9, 0.1, 0.1)
+    love.graphics.circle('fill', self.x + 10, self.y + 18, 3)
+    love.graphics.circle('fill', self.x + 18, self.y + 18, 3)
+
+    love.graphics.setColor(1, 1, 1)
 end
--- =================== RENDERIZADO ===================
-function Jugador:Dibujar()
-    love.graphics.setColor(1, 1, 1, 1) -- Resetea color a blanco neutro
-    love.graphics.draw(
-        self.sprite,
-        math.floor(self.x),
-        math.floor(self.y),
-        0,
-        1,
-        1,
-        self.origen_x,
-        self.origen_y
-    )
+
+function Jugador:getBox()
+    return self.x, self.y, self.ancho, self.alto
 end

@@ -1,35 +1,32 @@
 MaquinaEstados = Class{}
 
 function MaquinaEstados:init(estados)
+    self.empty = {
+        render = function() end,
+        update = function() end,
+        enter = function() end,
+        exit = function() end,
+        keypressed = function() end
+    }
     self.estados = estados or {}
-    self.actual = nil
+    self.actual = self.empty
 end
 
 function MaquinaEstados:cambiar(nombreEstado, parametros)
-    assert(self.estados[nombreEstado], "El estado " .. tostring(nombreEstado) .. " no existe.")
-    if self.actual and self.actual.salir then
-        self.actual:salir()
-    end
+    assert(self.estados[nombreEstado], "El estado no existe: " .. tostring(nombreEstado))
+    self.actual:exit()
     self.actual = self.estados[nombreEstado]()
-    if self.actual.entrar then
-        self.actual:entrar(parametros)
-    end
+    self.actual:enter(parametros)
 end
 
 function MaquinaEstados:update(dt)
-    if self.actual and self.actual.update then
-        self.actual:update(dt)
-    end
+    self.actual:update(dt)
 end
 
 function MaquinaEstados:draw()
-    if self.actual and self.actual.draw then
-        self.actual:draw()
-    end
+    self.actual:draw()
 end
 
 function MaquinaEstados:keypressed(key)
-    if self.actual and self.actual.keypressed then
-        self.actual:keypressed(key)
-    end
+    self.actual:keypressed(key)
 end
