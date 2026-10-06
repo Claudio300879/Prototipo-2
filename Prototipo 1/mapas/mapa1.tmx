@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="10" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+ <tileset firstgid="1" name="fondo" tilewidth="16" tileheight="16" tilecount="6144" columns="64">
+  <image source="../img/fondo.png" width="1024" height="1536"/>
+ </tileset>
+ <tileset firstgid="6145" name="fondo" tilewidth="160" tileheight="240" tilecount="36" columns="6">
+  <image source="../img/fondo.png" width="1024" height="1536"/>
+ </tileset>
+ <layer id="2" name="Capa de patrones 1" width="10" height="15">
+  <data encoding="csv">
+6180,0,0,0,0,0,0,0,0,0,
+6180,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,6179,6180,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,6179,6180,0,0,0,0,0,0,
+6179,6180,6179,6180,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>
