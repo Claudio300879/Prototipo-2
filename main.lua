@@ -73,7 +73,7 @@ function ReiniciarJuego()
 end
 
 function love.load()
-    love.window.setTitle("Prototipo 1")
+    love.window.setTitle("Prototipo 3 - Eventos")
     love.window.setMode(pantalla.ancho * pantalla.escala, pantalla.alto * pantalla.escala)
     love.graphics.setDefaultFilter("nearest", "nearest")
     lienzo = love.graphics.newCanvas(pantalla.ancho, pantalla.alto)
@@ -103,8 +103,9 @@ function love.load()
     sonidos.fondo:setLooping(true)
     sonidos.fondo:setVolume(0.5)
 
-    -- Carga de eventos
+    -- Carga de eventos y UI
     require("eventos")
+    UI.init() -- Inicializa las suscripciones de la interfaz
 
     -- Registro de estados
     MaquinaEstados:agregar("menu", EstadoMenu())
@@ -123,10 +124,15 @@ end
 
 function love.update(dt)
     Timer.update(dt)
+    UI.update(dt) -- Actualiza el tiempo de duración de los textos del HUD
     MaquinaEstados:update(dt)
 end
 
 function love.draw()
     MaquinaEstados:draw()
+    
+    -- Dibuja la interfaz de usuario por encima de los estados de juego
+    UI.draw()
+    
     love.graphics.setColor(1, 1, 1)
 end
